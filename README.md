@@ -13,11 +13,27 @@ Below is a step-by-step guide that takes you straight from downloading this boil
 
 ---
 
-## What changes are done?
+## Generate SSL on OSX
+```
+openssl req \
+    -newkey rsa:2048 \
+    -x509 \
+    -nodes \
+    -keyout key.pem \
+    -new \
+    -out cert.pem \
+    -subj /CN=localhost \
+    -reqexts SAN \
+    -extensions SAN \
+    -config <(cat /System/Library/OpenSSL/openssl.cnf \
+        <(printf '[SAN]\nsubjectAltName=DNS:localhost')) \
+    -sha256 \
+    -days 3650
+```
 
-Added ```serviceWorker``` for offline support, ```manifest.json``` file for add to homescreen support, cool icons from preact site and updated preact to latest version(7.1.0) + yarn ;). Rest all the same!!
-
-Thanks to [Jason Miller](https://github.com/developit) for writing a simple and awesome boilerplate.
+After that you'll need to manually add certificate to keychain.
+reference this:
+https://www.accuweaver.com/2014/09/19/make-chrome-accept-a-self-signed-certificate-on-osx/
 
 ## What else do you want?
 

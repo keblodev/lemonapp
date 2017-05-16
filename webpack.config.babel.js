@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import path from 'path';
+import fs from 'fs';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -122,9 +123,13 @@ module.exports = {
 	devtool: ENV==='production' ? 'source-map' : 'cheap-module-eval-source-map',
 
 	devServer: {
-		port: process.env.PORT || 8080,
+		port: process.env.PORT || 8081,
 		host: 'localhost',
 		colors: true,
+		https: {
+    		cert: fs.readFileSync('./certs/cert.pem'),
+    		key: fs.readFileSync('./certs/key.pem')
+		},
 		publicPath: '/',
 		contentBase: './src',
 		historyApiFallback: true,
@@ -132,7 +137,7 @@ module.exports = {
 		proxy: {
 			// OPTIONAL: proxy configuration:
 			// '/optional-prefix/**': { // path pattern to rewrite
-			//	 target: 'http://target-host.com',
+			//	 target: 'http://target-sec-host.com',
 			//	 pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
 			// }
 		}
