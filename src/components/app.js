@@ -1,9 +1,11 @@
 import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { Route, Switch } from 'react-router-dom'
 
 import Header from './header';
 import Home from './home';
 import Profile from './profile';
+
+import PodcastFeed from './apps/podcastfeed';
 
 
 export default class App extends Component {
@@ -19,11 +21,12 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<Header />
-				<Router onChange={this.handleRoute}>
-					<Home path="/" />
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
-				</Router>
+				<Switch>
+					<Route exact path="/" component={Home}/>
+					<Route path="/profile" component={Profile} user="me"/>
+					<Route path="/profile/:user" component={Profile}/>						
+					<Route path="/podcasts" component={PodcastFeed}/>						
+				</Switch>
 			</div>
 		);
 	}

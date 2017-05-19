@@ -11,6 +11,7 @@ export default class Profile extends Component {
 		// start a timer for the clock:
 		this.timer = setInterval(::this.updateTime, 1000);
 		this.updateTime();
+		this.setUser();
 
 		// every time we get remounted, increment a counter:
 		this.setState({ count: this.state.count+1 });
@@ -27,8 +28,13 @@ export default class Profile extends Component {
 		this.setState({ time });
 	}
 
+	setUser() {
+		let user = this.props.match.params.user || 'Me';
+		this.setState({ user })
+	}
+
 	// Note: `user` comes from the URL, courtesy of our router
-	render({ user }, { time, count }) {
+	render({}, { time, count, user }) {
 		return (
 			<div class={style.profile}>
 				<h1>Profile: { user }</h1>
