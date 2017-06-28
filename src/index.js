@@ -1,21 +1,33 @@
 // import 'lie';
 // import 'isomorphic-fetch';
 import { h, render } from 'preact';
+
 import './style';
+
+import { configureStore } from './store/configureStore';
+import { history } from './store/configureStore';
+
+const store = configureStore();
 
 let root;
 function init() {
-	let App = require('./components/app').default;
-	root = render(<App />, document.body, root);
+	const Root = require('./containers/Root').default;
+	root = render(
+		<div>
+        	<Root
+          		store={ store }
+				history = { history }/>
+      	</div>
+	, document.body, root);
 }
 
 init();
 
 if (module.hot) {
-	module.hot.accept('./components/app', () => requestAnimationFrame( () => {
+	module.hot.accept('./containers/Root', () => requestAnimationFrame( () => {
 		flushLogs();
 		init();
-	}) );
+	}));
 
 	// optional: mute HMR/WDS logs
 	let log = console.log,
