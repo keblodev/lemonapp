@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 
 import style from './style';
 
+import GqlinAppTestList from './components/gqlCmpntInApp';
+
 import * as AppComponentActions from './actions';
 
 class PodcastFeed extends Component {
@@ -49,6 +51,7 @@ class PodcastFeed extends Component {
 				<button onCLick={::this.someComponentAction} />
 				<div>Feed route mounted { headerString } lol.</div>
                 <this.ThatLol > </this.ThatLol>
+				<GqlinAppTestList />
 			</div>
 		);
 	}

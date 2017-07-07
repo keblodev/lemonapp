@@ -32,6 +32,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.14.0",
     "babel-runtime": "^6.11.6",
+    "casual-browserify": "^1.5.12",
     "chai": "^3.5.0",
     "copy-webpack-plugin": "^4.0.1",
     "core-js": "^2.4.1",
@@ -73,11 +74,15 @@
     "webpack-dev-server": "^1.15.0"
   },
   "dependencies": {
+    "apollo-test-utils": "^0.3.2",
+    "graphql": "^0.10.3",
+    "graphql-tools": "^0.10.1",
     "history": "^4.6.3",
     "preact": "^7.1.0",
     "preact-compat": "^3.16.0",
     "preact-router": "^2.3.2",
     "proptypes": "^0.14.3",
+    "react-apollo": "^1.4.3",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",

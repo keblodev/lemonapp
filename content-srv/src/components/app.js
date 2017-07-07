@@ -7,6 +7,7 @@ import Profile from './profile';
 
 import PodcastFeed from './apps/podcastfeed';
 
+import GqlAppShellTestList from './graphQlonAppShellTest';
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -27,6 +28,7 @@ export default class App extends Component {
 					<Route path="/profile/:user" component={Profile}/>						
 					<Route path="/podcasts" component={PodcastFeed}/>						
 				</Switch>
+				<GqlAppShellTestList />				
 			</div>
 		);
 	}
