@@ -38,10 +38,10 @@ module.exports = {
 	module: {
 		preLoaders: [
 			{
-				test: /\.jsx?$/,
+				test: /\.jsx$/,
 				exclude: /src\//,
 				loader: 'source-map'
-			}
+			},
 		],
 		loaders: [
 			{
@@ -93,7 +93,7 @@ module.exports = {
 			disable: ENV!=='production'
 		}),
 		new webpack.optimize.DedupePlugin(),
-		new webpack.DefinePlugin({
+		new webpack.DefinePlugin({		
 			'process.env': JSON.stringify({ NODE_ENV: ENV })
 		}),
 		new HtmlWebpackPlugin({
@@ -113,10 +113,10 @@ module.exports = {
 
 	node: {
 		global: true,
-		process: false,
+		process: true,
 		Buffer: false,
 		__filename: false,
-		__dirname: false,
+		__dirname: true,
 		setImmediate: false
 	},
 
