@@ -11,9 +11,15 @@ let nextId = 3;
 export const resolvers = {
     Query: {
         channels: () => {
+          console.log('Channels request')
           return fetch('https://localhost:5000/channels',
           { agent })
-	          .then(res => res.json());
+	          .then(res => res.json())
+            .then(res => {
+              console.log('Got channels. Sending ' + res);
+
+              return res;
+            });
         },
         childChannels: () => {
           return fetch('https://localhost:5000/childchannels',

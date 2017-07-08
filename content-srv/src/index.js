@@ -15,10 +15,11 @@ import {
   createNetworkInterface
 } from 'react-apollo';
 
+/* to mock on client -> uncomment this
+
 import { 
   makeExecutableSchema,
-  addMockFunctionsToSchema,
-  mockServer
+  addMockFunctionsToSchema
 } from 'graphql-tools';
 
 import { mockNetworkInterfaceWithSchema } from 'apollo-test-utils';
@@ -30,8 +31,6 @@ const mocks = {
 		Channel: () => ({ name: "from local-mock -> " + casual.name }),  
 		ChildChannel: () => ({ name: "from local-mock -> " + casual.name })
 }
-
-/* to mock on client -> uncomment this
 
 addMockFunctionsToSchema({
 	schema, 
