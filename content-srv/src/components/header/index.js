@@ -22,6 +22,7 @@ class Header extends Component {
 				<button onCLick={::this.someAction}/>
 				<nav>
 					<Link to="/">Home</Link>
+					<Link to="/feedrizer">Feedrizer</Link>
 					<Link to="/sampleapp">SampleApp</Link>
 					<Link to="/profile">Me</Link>
 					<Link to="/profile/john">John</Link>
