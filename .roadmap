@@ -1,11 +1,58 @@
 1. Redux Router -> DONE
 
-2. Rellay setup
+2. Apollo GraphQl setup -> Done
 
-3. GraphQl setup
+3. Start feeds agregator app
 
-4. Start Podcasts app
+    a. Stat Ui work
 
-5. Start feeds agregator app
+        - Login
+            - user session setup
+            - FB auth
+            - G+
+        - OAuth 
+            - twitter
+            - FB
+            - Youtube
+            - SoundCloud
+            - Medium
+            - Pinterest
+            - Tumblr
+        - Nav
+            - user
+                - user page
 
-6. Start subscrible app
+            - settings
+                - settings page
+            
+            - linked acounts/apps (FB, twitter, medium, etc.)
+
+        Main View
+
+            - Filter
+            - Search
+            - Main list View
+                - Main List View Item Components
+        
+
+5. Code split and in dev eslint, csslint
+
+6. Bind perf headless chrome
+    
+    - headles chrome perf analytics
+    - lighthouse analytics
+    - pagespeed? 
+
+    - CI
+
+    - bind that to propper and realtime D3_like UI
+
+7. Write some tests + CI
+
+9. CSSDoc, JSDOc
+
+10. Start subscrible app
+
+11. Stard headlessmedia app
+
+12. Start Podcasts app   
