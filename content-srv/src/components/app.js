@@ -5,7 +5,7 @@ import Header from './header';
 import Home from './home';
 import Profile from './profile';
 
-import PodcastFeed from './apps/podcastfeed';
+import SampleApp from './apps/sampleapp';
 
 import GqlAppShellTestList from './graphQlonAppShellTest';
 
@@ -26,7 +26,7 @@ export default class App extends Component {
 					<Route exact path="/" component={Home}/>
 					<Route path="/profile" component={Profile} user="me"/>
 					<Route path="/profile/:user" component={Profile}/>						
-					<Route path="/podcasts" component={PodcastFeed}/>						
+					<Route path="/sampleapp" component={SampleApp}/>						
 				</Switch>
 				<GqlAppShellTestList />				
 			</div>

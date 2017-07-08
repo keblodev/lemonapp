@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import rootPodcastFeedAppReducer from "./podcastfeed/reducers";
+import rootSampleAppReducer from "./sampleapp/reducers";
 
 const rootAppsReducer = combineReducers({  
-  rootPodcastFeedAppReducer
+  rootSampleAppReducer
 });
 
 export default rootAppsReducer;

@@ -10,7 +10,7 @@ import GqlinAppTestList from './components/gqlCmpntInApp';
 
 import * as AppComponentActions from './actions';
 
-class PodcastFeed extends Component {
+class SampleApp extends Component {
     headerText = "this is feed";
 
 	state = {
@@ -69,4 +69,4 @@ function mapDispatch(dispatch) {
   };
 }
 
-export default connect(mapState, mapDispatch)(PodcastFeed);
+export default connect(mapState, mapDispatch)(SampleApp);
