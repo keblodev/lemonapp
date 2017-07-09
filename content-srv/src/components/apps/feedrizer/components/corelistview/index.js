@@ -1,6 +1,9 @@
 import { h, Component } from 'preact';
 import style from './style';
 
+import { Toolbar } from '../mdc'
+
+
 export default class PodcastPost extends Component {
 
     /*const listItems = numbers.map((number) =>
@@ -22,6 +25,11 @@ export default class PodcastPost extends Component {
 	render() {
 		return (
 			<div class={style.profile}>
+				<Toolbar 
+				title="lol1"
+				align-end="true">
+					OK?
+				</Toolbar>			
 				<div>FeedPost route mounted lol.</div>
 			</div>
 		);

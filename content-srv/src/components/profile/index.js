@@ -30,7 +30,7 @@ export default class Profile extends Component {
 
 	setUser() {
 		let user = this.props.match.params.user || 'Me';
-		this.setState({ user })
+		this.setState({ user });
 	}
 
 	// Note: `user` comes from the URL, courtesy of our router

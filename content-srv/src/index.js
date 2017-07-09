@@ -2,12 +2,14 @@
 // import 'isomorphic-fetch';
 import { h, render } from 'preact';
 
+import './style/critical.less';
+
 import './style';
 
-import { configureStore } from './store/configureStore';
-import { history } from './store/configureStore';
+import { configureStore } from './store/configureStore-ENV_TARGET';
+import { history } from './store/configureStore-ENV_TARGET';
 
-import casual from 'casual-browserify';
+// import casual from 'casual-browserify';
 
 import {
   ApolloClient,
@@ -62,10 +64,10 @@ const client = new ApolloClient({
 
 const store = configureStore();
 
-
 let root;
+
 function init() {
-	const Root = require('./containers/Root').default;
+	const Root = require('./containers/Root-ENV_TARGET').default;
 	root = render(
 		<div>
 			<ApolloProvider 
@@ -82,7 +84,7 @@ function init() {
 init();
 
 if (module.hot) {
-	module.hot.accept('./containers/Root', () => requestAnimationFrame( () => {
+	module.hot.accept('./containers/Root-ENV_TARGET', () => requestAnimationFrame( () => {
 		flushLogs();
 		init();
 	}));

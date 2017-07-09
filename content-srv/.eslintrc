@@ -52,6 +52,7 @@
     "no-useless-concat": 2,
     "no-var": 2,
     "object-shorthand": 2,
-    "prefer-arrow-callback": 2
+    "prefer-arrow-callback": 2,
+    "no-empty-pattern": 0
   }
 }
