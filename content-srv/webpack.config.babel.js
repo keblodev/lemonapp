@@ -236,6 +236,7 @@ module.exports = {
 			//TODO - add baggage-loader
 			//TODO - js async
 			//TODO - do we need preload/prefetch css? seems like it already has the Highest priority on main()
+			//TODO - serviceWorker and Manifest generation!!
 		]
 	},
 
