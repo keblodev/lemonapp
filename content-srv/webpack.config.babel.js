@@ -9,6 +9,7 @@ import fs from 'fs';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import CleanPlugin from 'clean-webpack-plugin';
 import StyleExtHtmlWebpackPlugin from 'style-ext-html-webpack-plugin';
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 
 const babelSettings = JSON.parse(fs.readFileSync(".babelrc"))
 
@@ -92,7 +93,8 @@ module.exports = {
 	            	/src\/reducers\//,
 	            	/src\/store\//,
 	            	/src\/containers\//,
-	            	/src\/index.js/
+	            	/src\/index.js/,
+	            	/src\/serviceWorker.js/,
 	            ],
 	            loader: 'eslint-loader'
 	        },		
@@ -236,7 +238,7 @@ module.exports = {
 			//TODO - add baggage-loader
 			//TODO - js async
 			//TODO - do we need preload/prefetch css? seems like it already has the Highest priority on main()
-			//TODO - serviceWorker and Manifest generation!!
+			//TODO - serviceWorker and Manifest generation!! -> ServiceWorkerWebpackPlugin
 		]
 	},
 
@@ -256,13 +258,15 @@ module.exports = {
 		new webpack.NormalModuleReplacementPlugin(/(.*)-ENV_TARGET(\.*)/, function(resource) {
 			resource.request = resource.request.replace(/-ENV_TARGET/, `-${ENV}`);
 		}),		
-		
+
 		new HtmlWebpackPlugin({
 			template: './index.html',
 			minify: { collapseWhitespace: true }
 		}),
+
 		nonCritical,
 		criticalCSS,
+
 		new StyleExtHtmlWebpackPlugin('critical.css'),				
  		new PreloadWebpackPlugin({
 		    rel: 'preload',
@@ -283,7 +287,7 @@ module.exports = {
 		// 	maxSize: 50000
 		// }),
 		new CopyWebpackPlugin([
-			{ from: './serviceWorker.js', to: './' },
+			// { from: './serviceWorker.js', to: './' },
 			{ from: './manifest.json', to: './' },
 			{ from: './favicon.ico', to: './' }
 		]),
@@ -299,6 +303,12 @@ module.exports = {
 		// 	// children: true
 		// 	// minChunks: Infinity,
 		// })
+
+		// Still need some experimentation and adjustment
+	    // new ServiceWorkerWebpackPlugin({
+     //  		entry: path.join(__dirname, 'src/serviceWorker.js')
+    	// }),
+
 	]).concat(ENV==='production' ? [
 		new CleanPlugin(pathsToClean, cleanOptions),
         // This plugin looks for similar chunks and files
@@ -311,6 +321,7 @@ module.exports = {
         }),
 
 		// just generate report later on once CI is there
+		// TODO - add debug
 		new BundleAnalyzerPlugin({
 					// Can be `server`, `static` or `disabled`. 
 					// In `server` mode analyzer will start HTTP server to show bundle report. 

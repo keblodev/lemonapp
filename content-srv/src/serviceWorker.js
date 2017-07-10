@@ -1,13 +1,13 @@
 var cacheName = 'cache-v2';
 
 var filesToCache = [
-	'./index.html',
-	'./index.html?utm_source=homescreen',
-	'./style.css',
-  './bundle.js',
+	// './index.html',
+	// './index.html?utm_source=homescreen',
+	// './style.css',
+  // './bundle.js',
   './manifest.json',
-  './assets/icons/favicon-16x16.png',
-  './assets/icons/favicon-32x32.png'
+  // './assets/icons/favicon-16x16.png',
+  // './assets/icons/favicon-32x32.png'
 ];
 
 //Adding 'install' event listener
