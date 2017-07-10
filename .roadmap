@@ -35,9 +35,9 @@
                 - Main List View Item Components
         
 
-5. Code split and in dev eslint, csslint
+5. Code split and in dev eslint, csslint --> done
 
-6. Bind perf headless chrome
+6. Bind perf headless chrome -> *partially
     
     - headles chrome perf analytics
     - lighthouse analytics
