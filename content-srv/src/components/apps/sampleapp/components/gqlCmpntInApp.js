@@ -21,10 +21,7 @@ const GqlinAppTestList = ({ data: {loading, error, childChannels }}) => {
     <ul>
         { childChannels.map( ch => <li key={ch.id}>{ch.name}</li> ) }
     </ul>;        
-      {/*<AddChannel /> 
-      { channels.map( ch => 
-        <div key={ch.id} className={'channel ' + (ch.id < 0 ? 'optimistic' : '')}>{ch.name}</div> ) 
-      }*/}
+
     </div>
   );
 };

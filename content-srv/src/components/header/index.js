@@ -9,7 +9,7 @@ import style from './style';
 
 import * as AppActions from '../../actions';
 
-class Header extends Component {
+class Header extends Component {	
 
 	someAction() {
 		this.props.actions.appShellLevelTestAction("AA test from app");
@@ -18,11 +18,13 @@ class Header extends Component {
 	render() {
 		return (
 			<header class={style.header}>
+				Weird
 				<h1>LemonApp shell</h1>
 				<button onCLick={::this.someAction}/>
 				<nav>
 					<Link to="/">Home</Link>
-					<Link to="/podcasts">Podcasts</Link>
+					<Link to="/feedrizer">Feedrizer</Link>
+					<Link to="/sampleapp">SampleApp</Link>
 					<Link to="/profile">Me</Link>
 					<Link to="/profile/john">John</Link>
 				</nav>

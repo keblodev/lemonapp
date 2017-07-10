@@ -23,7 +23,9 @@ const app = express();
 app.use('*', cors({ origin: 'https://localhost:4000' }));
 
 app.get('/channels/', function(req, res) {
+  console.log("Request for all channels");
   Channel.all().then(channels => {
+    console.log("sending channels " + channels);
     res.writeHead(200, {'Content-Type': 'json'});
     res.end(JSON.stringify(channels));
   });

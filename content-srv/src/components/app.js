@@ -1,13 +1,18 @@
 import { h, Component } from 'preact';
-import { Route, Switch } from 'react-router-dom'
+import Async from 'react-code-splitting';
+
+import { Route, Switch } from 'react-router-dom';
 
 import Header from './header';
+
 import Home from './home';
 import Profile from './profile';
 
-import PodcastFeed from './apps/podcastfeed';
+import SampleApp from './apps/sampleapp';
 
 import GqlAppShellTestList from './graphQlonAppShellTest';
+
+const FeedrizerApp = () => <Async load={import('./apps/feedrizer')} />;
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -25,10 +30,11 @@ export default class App extends Component {
 				<Switch>
 					<Route exact path="/" component={Home}/>
 					<Route path="/profile" component={Profile} user="me"/>
-					<Route path="/profile/:user" component={Profile}/>						
-					<Route path="/podcasts" component={PodcastFeed}/>						
+					<Route path="/profile/:user" component={Profile}/>
+					<Route path="/sampleapp" component={SampleApp}/>
+					<Route path="/feedrizer" component={FeedrizerApp}/>
 				</Switch>
-				<GqlAppShellTestList />				
+				<GqlAppShellTestList />
 			</div>
 		);
 	}

@@ -8,6 +8,7 @@ import {
 // import AddChannel from './AddChannel';
 
 const GqlAppShellTestList = ({ data: {loading, error, channels }}) => {
+  console.log('Heyoo! loading?' + loading + ' | Objects: ' + channels)
   if (loading) {
     return <p>Loading ...</p>;
   }
@@ -41,6 +42,6 @@ export const channelsListQuery = gql`
 export default graphql(
     channelsListQuery,
     // {
-    //     options : {pollInterval: 5000}
+    //     options : {pollInterval: 10000}
     // }
 )(GqlAppShellTestList);

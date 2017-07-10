@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
-import PodcastPost from './components/podcastpost'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import { Toolbar } from './components/mdc'
 
 import style from './style';
 
@@ -10,7 +11,7 @@ import GqlinAppTestList from './components/gqlCmpntInApp';
 
 import * as AppComponentActions from './actions';
 
-class PodcastFeed extends Component {
+class FeedrizerApp extends Component {
     headerText = "this is feed";
 
 	state = {
@@ -31,7 +32,7 @@ class PodcastFeed extends Component {
         const numbers = [1,2];//props.numbers;
         const listItems = numbers.map((number) =>
             <li key={number.toString()}>
-                {number} <PodcastPost />                
+                {number}                 
             </li>
         );
 
@@ -48,6 +49,11 @@ class PodcastFeed extends Component {
 	render({}, { headerString }) {
 		return (
 			<div class={style.profile}>
+				<Toolbar 
+				title="lol1"
+				align-end="true">
+					OK?
+				</Toolbar>				
 				<button onCLick={::this.someComponentAction} />
 				<div>Feed route mounted { headerString } lol.</div>
                 <this.ThatLol > </this.ThatLol>
@@ -69,4 +75,4 @@ function mapDispatch(dispatch) {
   };
 }
 
-export default connect(mapState, mapDispatch)(PodcastFeed);
+export default connect(mapState, mapDispatch)(FeedrizerApp);
