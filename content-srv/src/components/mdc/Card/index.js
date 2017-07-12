@@ -3,6 +3,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 import { h } from "preact";
 import MaterialComponent from "../MaterialComponent";
 import Button from "../Button";
+import './style.css';
+
 class Card extends MaterialComponent {
   constructor() {
     super();

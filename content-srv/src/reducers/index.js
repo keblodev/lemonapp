@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import navigation from "./navigation";
+import menuNavigation from "./menuNavigation";
 
 import rootAppsReducer from "../components/apps/appsCombinedReducer";
 
-const rootReducer = combineReducers({  
-  navigation,
+const rootReducer = combineReducers({
+  menuNavigation,
   rootAppsReducer
 });
 

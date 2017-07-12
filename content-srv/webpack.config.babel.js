@@ -23,7 +23,7 @@ const criticalCSS = new ExtractTextPlugin('critical.css');
 const nonCritical = new ExtractTextPlugin({
 				filename: '[name].' + (ENV === 'production' ? '[chunkhash]' : '[hash]') + '.css',
 				allChunks: true,
-				disable: ENV!=='production'			
+				disable: ENV!=='production'
 			})
 // the path(s) that should be cleaned
 const pathsToClean = [
@@ -41,19 +41,21 @@ module.exports = {
 	context: path.resolve(__dirname, "src"),
 	entry:
 	{
-		app: path.resolve(__dirname, './src/index.js'),	
-		// vendors.js separate gives a much bigger total file 
+		app: path.resolve(__dirname, './src/index.js'),
+		// vendors.js separate gives a much bigger total file
 		// than all combined in app.js
-		// vendors: [
-		// 	'preact',
-		// 	'react-redux',
-		// 	'react-router',
-		// 	'react-router-dom',
-		// 	'react-apollo',
-		// 	'history',
-		// 	'apollo-client',
-		// 	'graphql'
-		// ]
+		vendors: [
+			'@material/drawer',
+			'@material/ripple'
+			// 'preact',
+			// 'react-redux',
+			// 'react-router',
+			// 'react-router-dom',
+			// 'react-apollo',
+			// 'history',
+			// 'apollo-client',
+			// 'graphql'
+		]
 	},
 
 	output: {
@@ -80,7 +82,7 @@ module.exports = {
 
 	module: {
 		rules: [
-	        {	
+	        {
 	        	enforce: 'pre',
 	            test: /\.js/,
 	            exclude: [
@@ -88,7 +90,6 @@ module.exports = {
 	            	/src\/components\/mdc\//,
 	            	/src\/components\/apps\//,
 	            	/src\/components\/graphQlonAppShellTest.js/,
-	            	/src\/components\/header\//,
 	            	/src\/components\/home\//,
 	            	/src\/reducers\//,
 	            	/src\/store\//,
@@ -97,8 +98,8 @@ module.exports = {
 	            	/src\/serviceWorker.js/,
 	            ],
 	            loader: 'eslint-loader'
-	        },		
-			{	
+	        },
+			{
 				enforce: "pre",
 				test: /\.jsx$/,
 				exclude: /src\//,
@@ -111,14 +112,14 @@ module.exports = {
 					/src\//
         		],
 				loader: 'babel-loader',
-        		query: babelSettings				
+        		query: babelSettings
 			},
 			{
 				test: /critical\.(less|css)$/,
 				include: /critical\.(less|css)$/,
 				loader: criticalCSS.extract({
 
-					use: [	
+					use: [
 							{
 								loader: 'css-loader',
 								options: {
@@ -142,14 +143,35 @@ module.exports = {
 						],
 						fallback: 'style-loader?singleton',
 				})
-			},			
+			},
+			{
+				test: /\.css$/,
+				include: /src\/components\/mdc\//,
+				loader: nonCritical.extract({
+					use: [
+							{
+								loader: 'css-loader',
+								options: {
+									// sourceMap: true
+								}
+							},
+							{
+								loader: 'postcss-loader'
+							}
+						],
+						fallback: 'style-loader?singleton',
+				})
+			},
 			{
 				test: /\.(less|css)$/,
 				include: /src\/components\//,
-				exclude: /critical\.(less|css)$/,
+				exclude: [
+					/critical\.(less|css)$/,
+					/src\/components\/mdc\//
+				],
 				loader: nonCritical.extract({
-					use: [	
-							
+					use: [
+
 							{
 								loader: 'css-loader',
 								options: {
@@ -178,10 +200,11 @@ module.exports = {
 				test: /\.(less|css)$/,
 				exclude: [
 					/src\/components\//,
-					/critical\.(less|css)$/
+					/critical\.(less|css)$/,
+					/src\/components\/mdc\//
 				],
 				loader: nonCritical.extract({
-					use: [	
+					use: [
 							{
 								loader: 'css-loader',
 								options: {
@@ -189,7 +212,7 @@ module.exports = {
 								}
 							},
 							{
-								loader: 'postcss-loader'								
+								loader: 'postcss-loader'
 							},
 							{
 								loader: 'less-loader',
@@ -244,20 +267,20 @@ module.exports = {
 
 	plugins: ([
 		new webpack.NoEmitOnErrorsPlugin(),
-		// new webpack.DefinePlugin({		
+		// new webpack.DefinePlugin({
 		// 	'process.env': JSON.stringify({ NODE_ENV: ENV }),
 		// 	// 'process.env.NODE_ENV': ENV
-		// }),	
+		// }),
 		new webpack.LoaderOptionsPlugin({
 			options: {
 			postcss: [
 				autoprefixer({ browsers: 'last 2 versions' }),
 			]
 			}
-		}),			
+		}),
 		new webpack.NormalModuleReplacementPlugin(/(.*)-ENV_TARGET(\.*)/, function(resource) {
 			resource.request = resource.request.replace(/-ENV_TARGET/, `-${ENV}`);
-		}),		
+		}),
 
 		new HtmlWebpackPlugin({
 			template: './index.html',
@@ -267,18 +290,18 @@ module.exports = {
 		nonCritical,
 		criticalCSS,
 
-		new StyleExtHtmlWebpackPlugin('critical.css'),				
+		new StyleExtHtmlWebpackPlugin('critical.css'),
  		new PreloadWebpackPlugin({
 		    rel: 'preload',
 		    as: 'script',
 		    fileBlacklist: [/\.css$/,/\.map/],
-		    include: ['app']//, 'vendors'] 			
+		    include: ['app']//, 'vendors']
  		}),
  		new PreloadWebpackPlugin({
 		    rel: 'prefetch',
 		    as: 'script',
 		    fileBlacklist: [/\.css$/,/\.map/],
-		    include: 'asyncChunks' 			
+		    include: 'asyncChunks'
  		}),
 
  		//might come handy later on scale
@@ -291,18 +314,17 @@ module.exports = {
 			{ from: './manifest.json', to: './' },
 			{ from: './favicon.ico', to: './' }
 		]),
-		// vendors.js separate gives a much bigger total file 
+		// vendors.js separate gives a much bigger total file
 		// than all combined in app.js
 		// and there are no common modules yet
-		// new webpack.optimize.CommonsChunkPlugin({
-		// 	name: 'vendors',
-		// 	filename: '[name].' + (ENV === 'production' ? '[chunkhash]' : '[hash]') + '.js',
-		// 	// chunks: ["A", "B"]
-		// 	// async: true,
-		// 	// minChunks: 3,
-		// 	// children: true
-		// 	// minChunks: Infinity,
-		// })
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendors',
+			filename: '[name].' + (ENV === 'production' ? '[chunkhash]' : '[hash]') + '.js',
+			// chunks: ["A", "B"],
+			// async: true,
+			// children: true,
+			// minChunks: 2,
+		})
 
 		// Still need some experimentation and adjustment
 	    // new ServiceWorkerWebpackPlugin({
@@ -312,7 +334,7 @@ module.exports = {
 	]).concat(ENV==='production' ? [
 		new CleanPlugin(pathsToClean, cleanOptions),
         // This plugin looks for similar chunks and files
-        // and merges them for better caching by the user	
+        // and merges them for better caching by the user
 		new webpack.optimize.OccurrenceOrderPlugin(),
         // This plugin prevents Webpack from creating chunks
         // that would be too small to be worth loading separately
@@ -323,36 +345,36 @@ module.exports = {
 		// just generate report later on once CI is there
 		// TODO - add debug
 		new BundleAnalyzerPlugin({
-					// Can be `server`, `static` or `disabled`. 
-					// In `server` mode analyzer will start HTTP server to show bundle report. 
-					// In `static` mode single HTML file with bundle report will be generated. 
-					// In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`. 
+					// Can be `server`, `static` or `disabled`.
+					// In `server` mode analyzer will start HTTP server to show bundle report.
+					// In `static` mode single HTML file with bundle report will be generated.
+					// In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
 					analyzerMode: 'static',
-					// Host that will be used in `server` mode to start HTTP server. 
+					// Host that will be used in `server` mode to start HTTP server.
 					analyzerHost: '127.0.0.1',
-					// Port that will be used in `server` mode to start HTTP server. 
+					// Port that will be used in `server` mode to start HTTP server.
 					analyzerPort: 8888,
-					// Path to bundle report file that will be generated in `static` mode. 
-					// Relative to bundles output directory. 
+					// Path to bundle report file that will be generated in `static` mode.
+					// Relative to bundles output directory.
 					reportFilename: 'report.html',
-					// Module sizes to show in report by default. 
-					// Should be one of `stat`, `parsed` or `gzip`. 
-					// See "Definitions" section for more information. 
+					// Module sizes to show in report by default.
+					// Should be one of `stat`, `parsed` or `gzip`.
+					// See "Definitions" section for more information.
 					defaultSizes: 'start',
-					// Automatically open report in default browser 
+					// Automatically open report in default browser
 					openAnalyzer: true,
-					// If `true`, Webpack Stats JSON file will be generated in bundles output directory 
+					// If `true`, Webpack Stats JSON file will be generated in bundles output directory
 					generateStatsFile: false,
-					// Name of Webpack Stats JSON file that will be generated if `generateStatsFile` is `true`. 
-					// Relative to bundles output directory. 
+					// Name of Webpack Stats JSON file that will be generated if `generateStatsFile` is `true`.
+					// Relative to bundles output directory.
 					statsFilename: 'stats.json',
-					// Options for `stats.toJson()` method. 
-					// For example you can exclude sources of your modules from stats file with `source: false` option. 
-					// See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21 
+					// Options for `stats.toJson()` method.
+					// For example you can exclude sources of your modules from stats file with `source: false` option.
+					// See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
 					statsOptions: null,
-					// Log level. Can be 'info', 'warn', 'error' or 'silent'. 
+					// Log level. Can be 'info', 'warn', 'error' or 'silent'.
 					logLevel: 'info'
-				})		
+				})
 	] : []),
 
 	stats: { colors: true },
@@ -366,7 +388,7 @@ module.exports = {
 		setImmediate: false
 	},
 
-	devtool: ENV ==='production' ? '' : 'cheap-module-eval-source-map',
+	// devtool: ENV ==='production' ? '' : 'cheap-module-eval-source-map',
 
 	devServer: {
 		port: process.env.PORT || 8081,

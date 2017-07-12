@@ -3,7 +3,8 @@ import { h, Component } from 'preact';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Toolbar } from './components/mdc'
+import MDC from './components/mdc';
+const {Toolbar, Button} = MDC;
 
 import style from './style';
 
@@ -49,14 +50,24 @@ class FeedrizerApp extends Component {
 	render({}, { headerString }) {
 		return (
 			<div class={style.profile}>
-				<Toolbar 
-				title="lol1"
-				align-end="true">
-					OK?
-				</Toolbar>				
+				<Toolbar className={style.header}>
+					<Toolbar.Row>
+						<Toolbar.Section align-start={true}>
+							<Toolbar.Icon
+								onClick={() => {
+								this.drawer.MDComponent.open = true;
+								}}
+							>
+								menu
+							</Toolbar.Icon>
+							<Toolbar.Title>LemonApp shell</Toolbar.Title>
+						</Toolbar.Section>
+					</Toolbar.Row>				
+				</Toolbar>
 				<button onCLick={::this.someComponentAction} />
 				<div>Feed route mounted { headerString } lol.</div>
                 <this.ThatLol > </this.ThatLol>
+				<Button>ok?</Button>
 				<GqlinAppTestList />
 			</div>
 		);

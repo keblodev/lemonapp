@@ -1,17 +1,14 @@
 import { h, Component } from 'preact';
 import Async from 'react-code-splitting';
-
 import { Route, Switch } from 'react-router-dom';
 
 import Header from './header';
-
+import SideMenu from './sidemenu';
 import Home from './home';
-import Profile from './profile';
-
-import SampleApp from './apps/sampleapp';
 
 import GqlAppShellTestList from './graphQlonAppShellTest';
 
+const SampleApp = () => <Async load={import('./apps/sampleapp')} />;
 const FeedrizerApp = () => <Async load={import('./apps/feedrizer')} />;
 
 export default class App extends Component {
@@ -27,10 +24,9 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<Header />
+				<SideMenu />
 				<Switch>
 					<Route exact path="/" component={Home}/>
-					<Route path="/profile" component={Profile} user="me"/>
-					<Route path="/profile/:user" component={Profile}/>
 					<Route path="/sampleapp" component={SampleApp}/>
 					<Route path="/feedrizer" component={FeedrizerApp}/>
 				</Switch>

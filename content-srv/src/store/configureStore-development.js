@@ -1,6 +1,7 @@
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import { persistState } from 'redux-devtools';
 import rootReducer from '../reducers';
+
 import DevTools from '../containers/DevTools';
 
 import createHistory from 'history/createBrowserHistory'
@@ -23,11 +24,11 @@ const enhancer = compose(
 export function configureStore(initialState) {
   const store = createStore(
       combineReducers({
-		    ...rootReducer,
+		    app: rootReducer,
 		    routing: routerReducer
-	    }),      
-      initialState, 
-      enhancer,    	
+	    }),
+      initialState,
+      enhancer,
 	    applyMiddleware(middleware)
     );
 

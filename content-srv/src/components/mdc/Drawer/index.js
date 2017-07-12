@@ -5,7 +5,7 @@ import MaterialComponent from "../MaterialComponent";
 import { MDCTemporaryDrawer } from "@material/drawer/temporary";
 import { MDCPersistentDrawer } from "@material/drawer/persistent";
 import List from "../List";
-
+import './style.css';
 class TemporaryDrawer extends MaterialComponent {
   constructor() {
     super();

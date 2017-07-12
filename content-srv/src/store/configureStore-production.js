@@ -12,10 +12,10 @@ const middleware = routerMiddleware(history)
 export function configureStore(initialState) {
   return createStore(
       combineReducers({
-		    ...rootReducer,
+		    app: rootReducer,
 		    routing: routerReducer
-	    }),      
-      initialState,     	
+	    }),
+      initialState,
 	    applyMiddleware(middleware)
   );
 }
