@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import { Link } from 'react-router-dom';
+import { Drawer } from '../mdc';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Drawer } from '../mdc';
 
 import style from './style';
 
@@ -32,12 +33,16 @@ class SideMenu extends Component {
 	shouldComponentUpdate = (({menuNavigationEvent}) =>
 			menuNavigationEvent.type === APP_SHELL_OPEN_MENU ||
 			menuNavigationEvent.type === APP_SHELL_CLOSE_MENU
-			);
+			)
 
 	render({menuNavigationEvent}) {
+		const isRtl = true;
+		const isRtlClassName = isRtl ? style.rtlNav : '';
+		const classNames = `${style.appShellMenu} ${isRtlClassName}`;
 		return (
 		<Drawer.TemporaryDrawer
-			className={style.app_shell_menu}
+			className={classNames}
+			isRtl= {isRtl}
 			ref={ drawer => {
 				this.drawer = drawer;
 			}}

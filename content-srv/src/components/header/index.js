@@ -1,5 +1,8 @@
 import { h, Component } from 'preact';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 import { Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -11,37 +14,117 @@ import { Toolbar, Button, Card } from '../mdc';
 
 class Header extends Component {
 
-	openMenu() {
+	currentRoute 		= null
+	previousRoute 		= null
+	currentDefaultTitle = 'LemonApp shell';
+
+	componentWillMount() {
+		const { newRouteString } = this.props;
+		this.__setCurrentTitle(newRouteString);
+	}
+
+	componentWillUpdate({newRouteString}) {
+		this.previousRoute = this.currentRoute;
+		this.__setCurrentTitle(newRouteString);
+	}
+
+	shouldComponentUpdate = (({newRouteString}) => this.currentRoute !== newRouteString)
+
+	__openMenu() {
 		this.props.actions.openAppShellMenuAction(true);
 	}
 
-	render() {
+	__setCurrentTitle(titleString) {
+		this.currentRoute = titleString;
+		this.currentTitle = this.currentRoute.length > 1 ? this.currentRoute : this.currentDefaultTitle;
+
+		this.setState({
+			title: this.currentTitle,
+			previousTitle: this.previousRoute
+		});
+	}
+
+	__handleLocationBack() {
+		this.props.history.goBack();
+	}
+
+	render(_, {title, previousTitle}) {
+
+		const backButton = this.currentTitle === this.currentDefaultTitle ? '' :
+
+			<div
+				key={previousTitle}
+				class={(style.locationBarItemContent + " " + style.locaticonBarIcon)}>
+				<Toolbar.Icon
+					onClick={::this.__handleLocationBack}
+					className={("material-icons " + style.locaticonBarIconContent)}
+					>
+					arrow_back
+				</Toolbar.Icon>
+			</div>
+		;
+
 		return (
 			<Toolbar className={style.header}>
 				<Toolbar.Row>
 					<Toolbar.Section align-start={true}>
-						<Toolbar.Icon
-							onClick={::this.openMenu}>
-							menu
-						</Toolbar.Icon>
-						<Toolbar.Title>LemonApp shell</Toolbar.Title>
+						<Toolbar.Title>
+							<div class={style.locationBarItems}>
+								<div
+									class={style.locationBarItem}
+									style={this.currentTitle === this.currentDefaultTitle ? '' : 'min-width: 30px;'}
+								>
+									<ReactCSSTransitionGroup
+										transitionName={ {
+											enter: style.locationTransitionEnter,
+											enterActive: style.locationTransitionActive,
+											leave: style.locationTransitionLeave,
+											leaveActive: style.locationTransitionLeaveActive
+										} }
+										transitionLeaveTimeout={500}
+										transitionEnterTimeout={500}
+										>
+											{backButton}
+									</ReactCSSTransitionGroup>
+								</div>
+								<div class={style.locationBarItem}>
+									<ReactCSSTransitionGroup
+									transitionName={ {
+										enter: style.locationTransitionEnter,
+										enterActive: style.locationTransitionActive,
+										leave: style.locationTransitionLeave,
+										leaveActive: style.locationTransitionLeaveActive
+									} }
+									transitionLeaveTimeout={300}
+									transitionEnterTimeout={300}
+									>
+										<div
+										key={title}
+										className={style.locationBarItemContent + ' ' + style.locaticonBarIconTitleText}
+										>
+											{title}
+										</div>
+									</ReactCSSTransitionGroup>
+								</div>
+							</div>
+						</Toolbar.Title>
 					</Toolbar.Section>
+						<Toolbar.Icon
+							onClick={::this.__openMenu}>
+							apps
+						</Toolbar.Icon>
 				</Toolbar.Row>
 			</Toolbar>
 		);
 	}
 }
 
-function mapState(state) {
-	return {
-		someState: {1:2}
-	};
-}
+const mapState = state => ({
+	newRouteString: state.routing.location && state.routing.location.pathname
+});
 
-function mapDispatch(dispatch) {
-	return {
-		actions: bindActionCreators(AppActions, dispatch)
-	};
-}
+const mapDispatch = dispatch => ({
+	actions: bindActionCreators(AppActions, dispatch)
+});
 
 export default connect(mapState, mapDispatch)(Header);

@@ -12,13 +12,13 @@ const GqlinAppTestList = ({ data: {loading, error, childChannels }}) => {
   if (error) {
     return <p>{error.message}</p>;
   }
-  
+
   return (
     <div className="gqlinAppShellTestList">
         in app Lol in app
-    <ul>
-        { childChannels.map( ch => <li key={ch.id}>{ch.name}</li> ) }
-    </ul>;        
+		<ul>
+			{ childChannels.map( ch => <li key={ch.id}>{ch.name}</li> ) }
+		</ul>
 
     </div>
   );

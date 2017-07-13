@@ -23,14 +23,16 @@ export default class App extends Component {
 	render() {
 		return (
 			<div id="app">
-				<Header />
 				<SideMenu />
+				<Header
+					history={this.props.history}
+				/>
 				<Switch>
 					<Route exact path="/" component={Home}/>
 					<Route path="/sampleapp" component={SampleApp}/>
 					<Route path="/feedrizer" component={FeedrizerApp}/>
 				</Switch>
-				<GqlAppShellTestList />
+				{/*<GqlAppShellTestList />*/}
 			</div>
 		);
 	}

@@ -44,7 +44,10 @@ class TemporaryDrawer extends MaterialComponent {
       }, props),
       h(
         "nav",
-        { className: "mdc-temporary-drawer__drawer" },
+        {
+			className: "mdc-temporary-drawer__drawer" ,
+			dir: this.props.isRtl ? "rtl": "",
+		},
         props.children
       )
     );
