@@ -2,7 +2,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 import { h } from "preact";
 import MaterialComponent from "../MaterialComponent";
-
+import './style.css';
 /**
  *  @prop dense = false
  *  @prop raised = false

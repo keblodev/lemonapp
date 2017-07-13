@@ -1,1 +1,3 @@
-export default require('../../../../mdc');
+import * as MDC from '../../../../mdc';
+
+export default MDC;
