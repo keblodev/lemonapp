@@ -1,0 +1,40 @@
+@import '../../style';
+
+.mdCard {
+	.mdCardStyle();
+}
+
+.mdcLayoutGridCell {
+	transition: 			.3s ease;
+	transition-property: 	opacity, transform;
+}
+
+.feedCardCellEnter {
+	opacity: 	.01;
+	transform: 	translateX(100%);
+
+	&.feedCardCellEnterActive {
+		opacity: 	1;
+		transform: 	translateX(0);
+	}
+}
+
+.feedCardCellLeave {
+	opacity: 	1;
+	transform: 	translateX(0);
+
+	&.feedCardCellLeaveActive {
+		opacity: 	.01;
+		transform: 	translateX(-100%);
+	}
+}
+
+.feedCardCellAppear {
+	opacity: 	.01;
+	transform: 	translateY(5%);
+
+	&.feedCardCellAppearActive {
+		opacity: 	1;
+		transform: 	translateY(0);
+	}
+}

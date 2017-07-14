@@ -46,7 +46,9 @@ module.exports = {
 		// than all combined in app.js
 		vendors: [
 			'@material/drawer',
-			'@material/ripple'
+			'@material/ripple',
+			'@material/textfield',
+			'@material/linear-progress',
 			// 'preact',
 			// 'react-redux',
 			// 'react-router',
@@ -273,9 +275,9 @@ module.exports = {
 		// }),
 		new webpack.LoaderOptionsPlugin({
 			options: {
-			postcss: [
-				autoprefixer({ browsers: 'last 2 versions' }),
-			]
+				postcss: [
+					autoprefixer({ browsers: 'last 2 versions' }),
+				]
 			}
 		}),
 		new webpack.NormalModuleReplacementPlugin(/(.*)-ENV_TARGET(\.*)/, function(resource) {
@@ -290,7 +292,11 @@ module.exports = {
 		nonCritical,
 		criticalCSS,
 
-		new StyleExtHtmlWebpackPlugin('critical.css'),
+		new StyleExtHtmlWebpackPlugin({
+			file: 'critical.css',
+			position: 'head-top',
+			minify: true
+		}),
  		new PreloadWebpackPlugin({
 		    rel: 'preload',
 		    as: 'script',

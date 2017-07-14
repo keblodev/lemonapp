@@ -92,6 +92,7 @@
     "preact-compat": "^3.16.0",
     "preact-router": "^2.3.2",
     "proptypes": "^0.14.3",
+    "react-addons-css-transition-group": "^15.6.0",
     "react-apollo": "^1.4.3",
     "react-code-splitting": "^1.1.1",
     "react-redux": "^5.0.5",
