@@ -1,5 +1,6 @@
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import { persistState } from 'redux-devtools';
+import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 import DevTools from '../containers/DevTools';
@@ -12,12 +13,16 @@ export const history = createHistory()
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history)
 
+const localStorageKey = "myAwesoemThingDev";
+
 const enhancer = compose(
   DevTools.instrument(),
+  //this save the WHOLE state
+  // which is somthing I might not need..
+  // but on other hadn -> persisting complete alaytics state on client
+  // is kinda big
   persistState(
-    window.location.href.match(
-      /[?&]debug_session=([^&#]+)\b/
-    )
+    localStorageKey
   )
 );
 
@@ -29,7 +34,7 @@ export function configureStore(initialState) {
 	    }),
       initialState,
       enhancer,
-	    applyMiddleware(middleware)
+	    applyMiddleware(thunk, middleware)
     );
 
   if (module.hot) {

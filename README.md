@@ -1,4 +1,4 @@
-# :rocket: Lemonred's contextual search pwa app 
+# :rocket: Lemonred's contextual search pwa app
 
 ## Generate SSL on OSX
 ```

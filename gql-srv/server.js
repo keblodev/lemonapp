@@ -9,7 +9,7 @@ const options = {
   cert: fs.readFileSync('./certs/cert.pem')
 };
 
-import { 
+import {
   graphqlExpress,
   graphiqlExpress,
 } from 'graphql-server-express';
@@ -35,7 +35,7 @@ app.use('/graphiql', graphiqlExpress({
 
 const server = https.createServer(options, app);
 
-server.listen(PORT, () => 
+server.listen(PORT, () =>
     console.log(`GraphQl Server is now running on https://localhost:${PORT}`)
 );
 

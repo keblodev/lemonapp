@@ -292,23 +292,18 @@ module.exports = {
 		nonCritical,
 		criticalCSS,
 
-		new StyleExtHtmlWebpackPlugin({
-			file: 'critical.css',
-			position: 'head-top',
-			minify: true
-		}),
- 		new PreloadWebpackPlugin({
-		    rel: 'preload',
-		    as: 'script',
-		    fileBlacklist: [/\.css$/,/\.map/],
-		    include: ['app']//, 'vendors']
- 		}),
- 		new PreloadWebpackPlugin({
-		    rel: 'prefetch',
-		    as: 'script',
-		    fileBlacklist: [/\.css$/,/\.map/],
-		    include: 'asyncChunks'
- 		}),
+		new StyleExtHtmlWebpackPlugin(
+			'critical.css'
+			// this bellow will include the link
+			// to non-exisisting critical.css
+			// TODO: report issue
+			// {
+			// 	file: 'critical.css',
+			// 	position: 'head-top',
+			// 	minify: true
+			// }
+		),
+
 
  		//might come handy later on scale
 		// new webpack.optimize.AggressiveSplittingPlugin({
@@ -338,6 +333,20 @@ module.exports = {
     	// }),
 
 	]).concat(ENV==='production' ? [
+
+ 		new PreloadWebpackPlugin({
+		    rel: 'preload',
+		    as: 'script',
+		    fileBlacklist: [/\.css$/,/\.map/],
+		    include: ['app']//, 'vendors']
+ 		}),
+ 		new PreloadWebpackPlugin({
+		    rel: 'prefetch',
+		    as: 'script',
+		    fileBlacklist: [/\.css$/,/\.map/],
+		    include: 'asyncChunks'
+ 		}),
+ 			
 		new CleanPlugin(pathsToClean, cleanOptions),
         // This plugin looks for similar chunks and files
         // and merges them for better caching by the user
@@ -357,7 +366,7 @@ module.exports = {
 					// In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
 					analyzerMode: 'static',
 					// Host that will be used in `server` mode to start HTTP server.
-					analyzerHost: '127.0.0.1',
+					analyzerHost: 'localhost',
 					// Port that will be used in `server` mode to start HTTP server.
 					analyzerPort: 8888,
 					// Path to bundle report file that will be generated in `static` mode.

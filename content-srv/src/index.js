@@ -19,7 +19,7 @@ import {
 
 /* to mock on client -> uncomment this
 
-import { 
+import {
   makeExecutableSchema,
   addMockFunctionsToSchema
 } from 'graphql-tools';
@@ -30,13 +30,13 @@ import { typeDefs } from './schema';
 const schema = makeExecutableSchema({ typeDefs });
 
 const mocks = {
-		Channel: () => ({ name: "from local-mock -> " + casual.name }),  
+		Channel: () => ({ name: "from local-mock -> " + casual.name }),
 		ChildChannel: () => ({ name: "from local-mock -> " + casual.name })
 }
 
 addMockFunctionsToSchema({
-	schema, 
-	mocks	
+	schema,
+	mocks
 });
 
 const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
@@ -48,7 +48,7 @@ const client = new ApolloClient({
 
 */
 
-const networkInterface = createNetworkInterface({ 
+const networkInterface = createNetworkInterface({
   uri: 'https://localhost:4000/graphql',
 });
 
@@ -70,7 +70,7 @@ function init() {
 	const Root = require('./containers/Root-ENV_TARGET').default;
 	root = render(
 		<div>
-			<ApolloProvider 
+			<ApolloProvider
 			client={client}
 			store={store}>
 				<Root

@@ -4,3 +4,4 @@
 .DS_Store
 db-srv/tstlemon.sqlite
 *.sqlite
+*.sqlite

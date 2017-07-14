@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import rootSampleAppReducer from "./sampleapp/reducers";
 import rootFeedrizerAppReducer from "./feedrizer/reducers";
 
-const rootAppsReducer = combineReducers({  
+const rootAppsReducer = combineReducers({
   rootSampleAppReducer,
   rootFeedrizerAppReducer
 });
