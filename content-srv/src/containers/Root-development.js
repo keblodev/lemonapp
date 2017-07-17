@@ -13,7 +13,7 @@ export default class Root extends Component {
         <ConnectedRouter history={history}>
           <div>
             <App history={history}/>
-            {/*<DevTools />*/}
+            <DevTools />
           </div>
         </ConnectedRouter>
       </Provider>

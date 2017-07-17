@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { withRouter } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { Link } from 'react-router-dom';
@@ -35,8 +36,10 @@ class Header extends Component {
 	}
 
 	__setCurrentTitle(titleString) {
+		//TODO: revisist title set. Currently if reset state it set's to default
+		// needs to be actual location based ideally
 		this.currentRoute = titleString;
-		this.currentTitle = this.currentRoute.length > 1 ? this.currentRoute : this.currentDefaultTitle;
+		this.currentTitle = this.currentRoute && this.currentRoute.length > 1 ? this.currentRoute : this.currentDefaultTitle;
 
 		this.setState({
 			title: this.currentTitle,
@@ -89,14 +92,14 @@ class Header extends Component {
 								</div>
 								<div class={style.locationBarItem}>
 									<ReactCSSTransitionGroup
-									transitionName={ {
-										enter: style.locationTransitionEnter,
-										enterActive: style.locationTransitionActive,
-										leave: style.locationTransitionLeave,
-										leaveActive: style.locationTransitionLeaveActive
-									} }
-									transitionLeaveTimeout={300}
-									transitionEnterTimeout={300}
+										transitionName={ {
+											enter: style.locationTransitionEnter,
+											enterActive: style.locationTransitionActive,
+											leave: style.locationTransitionLeave,
+											leaveActive: style.locationTransitionLeaveActive
+										} }
+										transitionLeaveTimeout={300}
+										transitionEnterTimeout={300}
 									>
 										<div
 										key={title}
@@ -119,7 +122,9 @@ class Header extends Component {
 	}
 }
 
-const mapState = state => ({
+const mapState = (state, ownProps) => ({
+	//ownProps are coming from router
+	//TODO: do a selector in reducer
 	newRouteString: state.routing.location && state.routing.location.pathname
 });
 
@@ -127,4 +132,4 @@ const mapDispatch = dispatch => ({
 	actions: bindActionCreators(AppActions, dispatch)
 });
 
-export default connect(mapState, mapDispatch)(Header);
+export default withRouter(connect(mapState, mapDispatch)(Header));

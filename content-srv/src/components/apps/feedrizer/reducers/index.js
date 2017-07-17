@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
-import navigation from "./navigation";
-import tempReducerTest from "./tempReducerTest";
+import navigation from './navigation';
 
-const rootFeedrizerAppReducer = combineReducers({  
+import auth from './auth';
+
+import { getLocalStore } from '../../appsStoreUtils';
+
+const REDUCER_ID = "rootFeedrizerAppReducer";
+
+export default combineReducers({
   navigation,
-  tempReducerTest
+  auth
 });
 
-export default rootFeedrizerAppReducer;
+export const getAuth = (store) => getLocalStore(store)(REDUCER_ID).auth;
+

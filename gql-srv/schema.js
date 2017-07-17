@@ -26,8 +26,21 @@ type Query {
    channel(name: String): Channel
 }
 
+type User {
+	id: ID!
+	user_name: String
+}
+
+type Auth {
+	auth_url: String
+	access_token: String
+}
+
 type Mutation {
   addChannel(name: String!): Channel
+
+  authorizeUser(oauth_token: String!, oauth_verifier: String!): Auth
+  getAuthUrl(for_app: String!): Auth
 }
 `;
 
