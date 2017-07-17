@@ -57,13 +57,13 @@ export const resolvers = {
 
 		authorizeUser: (root, args) => {
 			console.log(args)
-			return fetch('https://localhost:5000/authorizeuser?' + querystring.stringify(args),
+			return fetch('https://localhost:5000/api/feedrizer/authorizeuser?' + querystring.stringify(args),
           { agent })
 	          .then(res => res.json())}
 		,
 
 		getAuthUrl: (root, args) =>
-			fetch('https://localhost:5000/authorize?' + querystring.stringify({ args: args }),
+			fetch('https://localhost:5000/api/feedrizer/authorize?' + querystring.stringify({ args: args }),
           { agent })
 	          .then(res => res.json())
     }
