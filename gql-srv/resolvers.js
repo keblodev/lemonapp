@@ -1,70 +1,60 @@
-import fetch from 'node-fetch';
+import fetch, {Body, Headers} from 'node-fetch';
 import querystring from 'querystring';
 import https from 'https';
 
 const agent = new https.Agent({
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
 })
 
 let nextId = 3;
 
 export const resolvers = {
     Query: {
-        channels: () => {
-          console.log('Channels request')
-          return fetch('https://localhost:5000/channels',
-          { agent })
-	          .then(res => res.json())
-            .then(res => {
-              console.log('Got channels. Sending ' + res);
-
-              return res;
-            });
-        },
         childChannels: _ =>
           fetch('https://localhost:5000/childchannels',
           { agent })
 	          .then(res => res.json())
         ,
-        channel: (_, args) =>
-          fetch('https://localhost:5000/channel?'+querystring.stringify({ args: JSON.stringify(args) }),
+        posts: (_, args) =>
+          fetch('https://localhost:5000/api/feedrizer/feed?'+querystring.stringify({ args: JSON.stringify(args) }),
           { agent })
 	          .then(res => res.json())
     },
-    Channel: {
-      childChannels: (channel) =>
-        fetch('https://localhost:5000/childchannels?'+querystring.stringify({ args: JSON.stringify(channel) }),
+    Feed: {
+      posts: (feed) =>
+        fetch('https://localhost:5000/api/feedrizer/posts?'+querystring.stringify({ args: JSON.stringify(feed) }),
           { agent })
 	          .then(res => res.json())
 
     },
-    ChildChannel: {
-      channel(childChannel) {
-        //TODO:
-        return childChannel.getChannel();
-      }
-    },
+    ChildChannel: (_) =>
+		fetch('https://localhost:5000/childchannels',
+          { agent })
+	          .then(res => res.json())
+    ,
     Mutation: {
-        addChannel: (root, args) => {
-            //TODO:
-            const newChannel = {
-                id: nextId++,
-                name: args.name
-            };
-            channels.push(newChannel);
-            return newChannel;
-        },
 
-		authorizeUser: (root, args) => {
+		sync: (root, args) => {
 			console.log(args)
-			return fetch('https://localhost:5000/api/feedrizer/authorizeuser?' + querystring.stringify(args),
-          { agent })
+			return fetch('https://localhost:5000/api/feedrizer/sync',
+          	{
+				agent,
+				method: "POST",
+				body:    JSON.stringify(args),
+				headers: { 'Content-Type': 'application/json' },
+			})
 	          .then(res => res.json())}
 		,
 
-		getAuthUrl: (root, args) =>
-			fetch('https://localhost:5000/api/feedrizer/authorize?' + querystring.stringify({ args: args }),
-          { agent })
-	          .then(res => res.json())
+		getAuthUrl: (root, args) =>{
+			console.log(args);
+			return fetch('https://localhost:5000/api/feedrizer/authorize',
+          	{
+				agent,
+				method: "POST",
+				body:    JSON.stringify(args),
+				headers: { 'Content-Type': 'application/json' },
+			})
+	          .then(res => res.json())}
     }
 };

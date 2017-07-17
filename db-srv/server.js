@@ -20,6 +20,10 @@ const options = {
   cert: fs.readFileSync('./certs/cert.pem')
 };
 
+// Parsers for POST data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use('*', cors({ origin: 'https://localhost:4000' }));
 
 app.use('/api', appsApi);

@@ -23,7 +23,7 @@ import {
 class CoreAuth extends Component {
 
 	__getFilteredAppsAuthState(filter, authState) {
-		return Object.keys(AppIds).filter(appId => 
+		return Object.keys(AppIds).filter(appId =>
 			Object.keys(filter)
 				.reduce((res, key) => res && authState[appId][key] === filter[key], true)
 		);
@@ -58,7 +58,7 @@ class CoreAuth extends Component {
 	}
 
 	__handleIncomingTokens({oauth_token, oauth_verifier}) {
-		const {auth, history, location, actions, authTwitterUser} = this.props;
+		const {auth, history, location, actions, sync} = this.props;
 
 		const authorizingAppId = this.__detectMultipleAuthorizingApps(
 			this.__getFilteredAppsAuthState(
@@ -81,28 +81,29 @@ class CoreAuth extends Component {
 				history.push(location.path);
 		}
 	}
-		
+
 	__handleAuthSync() {
 
-		const {auth, actions, authTwitterUser} = this.props;
+		const {auth, actions, sync} = this.props;
 
-		const tokenReceivedAppsId = 
+		const tokenReceivedAppsId =
 			this.__getFilteredAppsAuthState(
 			{state: AuthStates.TOKEN_RECEIVED},
 			auth.authState)
-		;		
+		;
 		if (tokenReceivedAppsId.length) {
 			tokenReceivedAppsId.forEach(appId => {
 				if (auth.authState[appId].state === AuthStates.TOKEN_RECEIVED) {
-					authTwitterUser({
+					sync({
 						variables: {
+							for_app:		appId,
 							oauth_token:	auth.authState[appId].auth.oauth_token,
 							oauth_verifier:	auth.authState[appId].auth.oauth_verifier
 						},
 						update: (
 							store,
 							{ data: {
-								authorizeUser: { access_token }
+								sync: { access_token }
 							} }) => {
 
 							const authEventObj = {
@@ -114,16 +115,16 @@ class CoreAuth extends Component {
 							actions.authAction(authEventObj);
 							console.log(access_token && JSON.parse(access_token));
 						}
-					});	
+					});
 				}
 			})
-		}	
+		}
 	}
 
 	render({auth, getAppAuthUrlMutation, history }) {
 		const {location} = history;
 		const {search} = location;
-		const {oauth_token, oauth_verifier} = parse(search);		
+		const {oauth_token, oauth_verifier} = parse(search);
 
 		//TODO: refac dis
 		if (oauth_token && oauth_verifier) {
@@ -137,16 +138,16 @@ class CoreAuth extends Component {
 				{
 					Object.keys( AppIds )
 						.filter(appId => appId === AppIds.TWITTER || appId === AppIds.FACEBOOK)
-						.map(appId => ( <AuthBtn 
+						.map(appId => ( <AuthBtn
 								auth={auth}
 								getAppAuthUrlMutation={getAppAuthUrlMutation}
-								appId={appId} 
-								history={history} 
+								appId={appId}
+								history={history}
 								location={location}
 							/>))
 				}
 			</div>
-		)		
+		)
 	}
 };
 
@@ -158,9 +159,9 @@ export const getAppAuthUrlMutation = gql`
 	}
 `;
 
-export const authTwitterUser = gql`
-	mutation authorizeUser($oauth_token: String!, $oauth_verifier: String!) {
-		authorizeUser(oauth_token: $oauth_token, oauth_verifier: $oauth_verifier) {
+export const sync = gql`
+	mutation sync($for_app: String!, $oauth_token: String!, $oauth_verifier: String!) {
+		sync(for_app: $for_app, oauth_token: $oauth_token, oauth_verifier: $oauth_verifier) {
 			access_token
 		}
 	}
@@ -171,13 +172,13 @@ const mapDispatch = dispatch => ({
 });
 
 
-export default 
+export default
 	connect(null,mapDispatch)
 	(
 		withRouter(
 			compose(
 				graphql(getAppAuthUrlMutation, {name: "getAppAuthUrlMutation"}),
-				graphql(authTwitterUser, {name: "authTwitterUser"}),
+				graphql(sync, {name: "sync"}),
 			)
 			(CoreAuth)
 		)
