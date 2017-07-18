@@ -10,8 +10,8 @@
             - user session setup
             - FB auth
             - G+
-        - OAuth 
-            - twitter
+        - OAuth
+            - twitter - done
             - FB
             - Youtube
             - SoundCloud
@@ -24,7 +24,7 @@
 
             - settings
                 - settings page
-            
+
             - linked acounts/apps (FB, twitter, medium, etc.)
 
         Main View
@@ -33,15 +33,15 @@
             - Search
             - Main list View
                 - Main List View Item Components
-        
+
 
 5. Code split and in dev eslint, csslint --> done
 
 6. Bind perf headless chrome -> *partially
-    
+
     - headles chrome perf analytics
     - lighthouse analytics
-    - pagespeed? 
+    - pagespeed?
 
     - CI
 
@@ -55,4 +55,6 @@
 
 11. Stard headlessmedia app
 
-12. Start Podcasts app   
+12. Start Podcasts app
+
+13. HTTP/2

@@ -4,4 +4,6 @@
 .DS_Store
 db-srv/tstlemon.sqlite
 *.sqlite
-*.sqlite
+**/*.sqlite
+**/*.env
+db-srv/.env
