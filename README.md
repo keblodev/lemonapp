@@ -1,5 +1,16 @@
 # :rocket: Lemonred's contextual search pwa app
 
+## What you see here is a:
+
+> Preact-Redux Progressive Web App with Service worker caching and PRPL pattern consumed, powered with GraphQl through 3 Node servers all wtitten in with lates ES6-ES7 code
+> Modular sandboxed apps architechture that can expand infinitely to any number of services and sub-apps
+> Combined with size and performance analytics
+> It's google-fast. First paint < 1sec. First interactive 1.3sec
+
+## What it does:
+
+> Current focus is on Feedrizer sub-app - a next-gen contextual personalized search app and engine
+
 ## Generate SSL on OSX
 ```
 openssl req \
