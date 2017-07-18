@@ -6,29 +6,42 @@ import {
 import { resolvers } from './resolvers';
 
 export const typeDefs = `
-type Channel {
-   id: ID!                # "!" denotes a required field
-   name: String
-   childChannels: [ChildChannel]
-}
 
 type ChildChannel {
   id: ID!
   name: String
-  channel: [Channel]
+}
+
+type FeedrizerUser {
+	id: ID!
+	name: String!
+	apps: [FeedrizerApp]
+}
+
+type FeedrizerApp {
+	id: ID!
+	appId: String!
+	feed: Feed
+	user: FeedrizerUser
+}
+
+type FeedPost {
+	id: ID!
+	appId: String
+}
+
+type Feed {
+	id: ID!
+	appId: String!
+	posts: [FeedPost]
 }
 
 # This type specifies the entry points into our API. In this case
 # there is only one - "channels" - which returns a list of channels.
 type Query {
-   channels: [Channel]    # "[]" means this is a list of channels
-   childChannels: [ChildChannel]
-   channel(name: String): Channel
-}
-
-type User {
-	id: ID!
-	user_name: String
+   childChannels: [ChildChannel]   # "[]" means this is a list of channels
+   posts(for_app: String!): [FeedPost]
+   feed(for_app: String!): [Feed]
 }
 
 type Auth {
@@ -37,9 +50,7 @@ type Auth {
 }
 
 type Mutation {
-  addChannel(name: String!): Channel
-
-  authorizeUser(oauth_token: String!, oauth_verifier: String!): Auth
+  sync(for_app: String!, oauth_token: String!, oauth_verifier: String!): Auth
   getAuthUrl(for_app: String!): Auth
 }
 `;
