@@ -7,7 +7,7 @@ import syncApi from './sync.api';
 
 import * as OAuthProcessor from './oauth1-processor';
 
-router.post('/authorize/', function(req, res, next) {
+router.post('*' , (req, res, next) => {
 
 	const {user_id, guest_id, for_app, callback_url} = req.body;
 
@@ -21,19 +21,6 @@ router.post('/authorize/', function(req, res, next) {
 });
 
 router.use('/authorize',authorizeApi);
-
-router.post('/sync/', function(req, res, next) {
-
-	const {user_id, guest_id, for_app, callback_url} = req.body;
-
-	if(for_app) {
-		req.url = req.url + '/' + for_app.toLowerCase();
-		next();
-	} else {
-		res.writeHead(404, {'Content-Type': 'json'});
-		res.end(JSON.stringify({error: "no app id provided"}));
-	}
-});
 
 router.use('/sync',syncApi);
 
