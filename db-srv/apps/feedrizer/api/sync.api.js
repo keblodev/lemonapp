@@ -28,7 +28,7 @@ router.post('/twitter', function(req, res) {
 	}
 });
 
-router.post('/facebook',async (req, res, next) => {
+router.post('/facebook', async (req, res, next) => {
 
 	const {for_app, auth_params} = req.body;
 
@@ -78,7 +78,7 @@ router.post('/facebook',async (req, res, next) => {
 	}
 });
 
-router.post('/google',async (req, res, next) => {
+router.post('/google', async (req, res, next) => {
 
 	const {for_app, auth_params} = req.body;
 
@@ -103,10 +103,10 @@ router.post('/google',async (req, res, next) => {
 		console.log(access_token_query);
 
 
-		const access_token_data = await fetch(access_token_url
-		+querystring.stringify(access_token_query),
+		const access_token_data = await fetch(access_token_url,
 		{
 			method: 'POST',
+			body:	querystring.stringify(access_token_query),
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 		})
 	          .then(res => res.json());
@@ -131,6 +131,59 @@ router.post('/google',async (req, res, next) => {
 			+querystring.stringify({access_token: access_token_data.access_token}))
 			.then(res => res.json());
 
+
+		const data = some_posts_data;
+
+		console.log(some_posts_data);
+
+		res.writeHead(200, {'Content-Type': 'json'});
+		res.end(JSON.stringify({access_token: JSON.stringify(data)}));
+	}
+});
+
+router.post('/instagram', async (req, res, next) => {
+
+	const {for_app, auth_params} = req.body;
+
+	const {user_id, guest_id, code} = auth_params || {};
+
+	console.log({code});
+
+	const {client_id, redirect_uri, client_secret, app_access_token, grant_type} = config[for_app];
+
+	const {access_token_url, app_verify_url, token_verify_url, get_posts_url} = AppAPIs[for_app];
+
+	if (code) {
+
+		const access_token_query = {
+			client_id,
+			client_secret,
+			redirect_uri,
+			code,
+			grant_type
+		};
+
+		console.log(access_token_query);
+		console.log(access_token_url+querystring.stringify(access_token_query))
+
+		const access_token_data = await fetch(access_token_url,
+		{
+			method: 'POST',
+			body: 	querystring.stringify(access_token_query),
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			}
+		})
+	          .then(res => res.json());
+
+		console.log(access_token_data);
+
+		const user_id = 'self';
+		const collection_type = 'recent'
+
+		const some_posts_data = await fetch(format(get_posts_url, {user_id, collection_type})
+			+querystring.stringify({access_token: access_token_data.access_token}))
+			.then(res => res.json());
 
 		const data = some_posts_data;
 

@@ -8,6 +8,7 @@ export const AuthStates = {
 export const AppIds = {
 	TWITTER:"TWITTER",
 	FACEBOOK:"FACEBOOK",
+	INSTAGRAM:"INSTAGRAM",
 	MEDIUM:"MEDIUM",
 	GOOGLE:"GOOGLE"
 }

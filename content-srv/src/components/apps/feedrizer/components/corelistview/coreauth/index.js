@@ -138,7 +138,8 @@ class CoreAuth extends Component {
 						.filter(appId =>
 							appId === AppIds.TWITTER ||
 							appId === AppIds.FACEBOOK ||
-							appId === AppIds.GOOGLE
+							appId === AppIds.GOOGLE ||
+							appId === AppIds.INSTAGRAM
 							)
 						.map(appId => ( <AuthBtn
 								auth={auth}
