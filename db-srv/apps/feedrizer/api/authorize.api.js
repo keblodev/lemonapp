@@ -30,9 +30,25 @@ router.post('/facebook', (req, res, next) => {
 
 	const {client_id, redirect_uri, scope} = config[for_app];
 
-	let fbAuthUrl = AppAPIs[for_app].auth_url;
+	const authUrl = AppAPIs[for_app].auth_url;
 
-	const auth_url = fbAuthUrl + querystring.stringify({client_id, redirect_uri, scope});
+	const auth_url = authUrl + querystring.stringify({client_id, redirect_uri, scope});
+
+	console.log(auth_url);
+
+	res.writeHead(200, {'Content-Type': 'json'});
+	res.end(JSON.stringify({auth_url}));
+});
+
+router.post('/google', (req, res, next) => {
+
+	const {user_id, guest_id, for_app, callback_url} = req.body;
+
+	const {client_id, redirect_uri, response_type, scope, access_type} = config[for_app];
+
+	const authUrl = AppAPIs[for_app].auth_url;
+
+	const auth_url = authUrl + querystring.stringify({client_id, response_type, redirect_uri, scope, access_type});
 
 	console.log(auth_url);
 

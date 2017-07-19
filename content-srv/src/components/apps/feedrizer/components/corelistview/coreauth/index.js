@@ -124,8 +124,6 @@ class CoreAuth extends Component {
 		const {search} = location;
 		const {oauth_token, oauth_verifier, code} = parse(search);
 
-
-
 		//TODO: refac dis
 		if (oauth_token || oauth_verifier || code) {
 			this.__handleIncomingTokens({oauth_token, oauth_verifier, code});
@@ -137,7 +135,11 @@ class CoreAuth extends Component {
 			<div>
 				{
 					Object.keys( AppIds )
-						.filter(appId => appId === AppIds.TWITTER || appId === AppIds.FACEBOOK)
+						.filter(appId =>
+							appId === AppIds.TWITTER ||
+							appId === AppIds.FACEBOOK ||
+							appId === AppIds.GOOGLE
+							)
 						.map(appId => ( <AuthBtn
 								auth={auth}
 								getAppAuthUrlMutation={getAppAuthUrlMutation}
@@ -170,7 +172,6 @@ export const sync = gql`
 const mapDispatch = dispatch => ({
 	actions: bindActionCreators(AppActions, dispatch)
 });
-
 
 export default
 	connect(null,mapDispatch)
