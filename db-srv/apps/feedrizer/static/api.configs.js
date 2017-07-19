@@ -11,7 +11,12 @@ export const AppAPIs = {
 		access_token: 	'https://api.twitter.com/oauth/access_token',
 		auth_url: 'https://twitter.com/oauth/authenticate?oauth_token=',
 	},
-	FACEBOOK: null,
+	FACEBOOK: {
+		auth_url: 			'https://www.facebook.com/v2.10/dialog/oauth?',
+		access_token_url: 	'https://graph.facebook.com/v2.10/oauth/access_token?',
+		token_verify_url:	'https://graph.facebook.com/debug_token?',
+		get_posts_url:		'https://graph.facebook.com/v2.5/{user_id}/feed?'
+	},
 	MEDIUM: null,
 	GOOGLE: null,
 }

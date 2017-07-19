@@ -1,6 +1,8 @@
-import fetch, {Body, Headers} from 'node-fetch';
+import fetch from 'node-fetch';
 import querystring from 'querystring';
 import https from 'https';
+
+import GraphQLJSON from 'graphql-type-json';
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
@@ -9,6 +11,7 @@ const agent = new https.Agent({
 let nextId = 3;
 
 export const resolvers = {
+	JSON: GraphQLJSON,
     Query: {
         childChannels: _ =>
           fetch('https://localhost:5000/childchannels',

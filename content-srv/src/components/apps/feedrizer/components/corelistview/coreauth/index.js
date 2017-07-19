@@ -57,7 +57,7 @@ class CoreAuth extends Component {
 
 	}
 
-	__handleIncomingTokens({oauth_token, oauth_verifier}) {
+	__handleIncomingTokens(searchParams) {
 		const {auth, history, location, actions, sync} = this.props;
 
 		const authorizingAppId = this.__detectMultipleAuthorizingApps(
@@ -71,8 +71,7 @@ class CoreAuth extends Component {
 					event: {
 						state: AuthStates.TOKEN_RECEIVED,
 						auth: {
-							oauth_token,
-							oauth_verifier
+							...searchParams
 						}
 					}
 				};
@@ -97,8 +96,7 @@ class CoreAuth extends Component {
 					sync({
 						variables: {
 							for_app:		appId,
-							oauth_token:	auth.authState[appId].auth.oauth_token,
-							oauth_verifier:	auth.authState[appId].auth.oauth_verifier
+							auth_params: 	auth.authState[appId].auth
 						},
 						update: (
 							store,
@@ -124,11 +122,13 @@ class CoreAuth extends Component {
 	render({auth, getAppAuthUrlMutation, history }) {
 		const {location} = history;
 		const {search} = location;
-		const {oauth_token, oauth_verifier} = parse(search);
+		const {oauth_token, oauth_verifier, code} = parse(search);
+
+
 
 		//TODO: refac dis
-		if (oauth_token && oauth_verifier) {
-			this.__handleIncomingTokens({oauth_token, oauth_verifier});
+		if (oauth_token || oauth_verifier || code) {
+			this.__handleIncomingTokens({oauth_token, oauth_verifier, code});
 		} else {
 			this.__handleAuthSync();
 		}
@@ -160,8 +160,8 @@ export const getAppAuthUrlMutation = gql`
 `;
 
 export const sync = gql`
-	mutation sync($for_app: String!, $oauth_token: String!, $oauth_verifier: String!) {
-		sync(for_app: $for_app, oauth_token: $oauth_token, oauth_verifier: $oauth_verifier) {
+	mutation sync($for_app: String!, $auth_params: JSON!) {
+		sync(for_app: $for_app, auth_params: $auth_params) {
 			access_token
 		}
 	}

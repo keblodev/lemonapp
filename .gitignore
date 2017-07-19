@@ -7,3 +7,4 @@ db-srv/tstlemon.sqlite
 **/*.sqlite
 **/*.env
 db-srv/.env
+db-srv/apps/feedrizer/env.js

@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 
 const https = require('https');
 const fs = require('fs');
@@ -24,6 +25,8 @@ import {
 
 const PORT = 4000;
 const app = express();
+
+app.use(morgan('dev'));
 
 app.use('*', cors({ origin: 'https://localhost:8081' }));
 

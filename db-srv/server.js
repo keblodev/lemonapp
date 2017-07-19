@@ -2,6 +2,8 @@ import express from 'express';
 import url from 'url';
 import cors from 'cors';
 
+import morgan from 'morgan';
+
 import https from 'https';
 import fs from 'fs';
 
@@ -19,6 +21,8 @@ const options = {
   key: fs.readFileSync('./certs/key.pem'),
   cert: fs.readFileSync('./certs/cert.pem')
 };
+
+app.use(morgan('dev'));
 
 // Parsers for POST data
 app.use(bodyParser.json());

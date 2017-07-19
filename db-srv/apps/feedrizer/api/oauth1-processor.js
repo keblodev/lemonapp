@@ -1,15 +1,14 @@
 import * as OAuth from 'oauth';
+
+import config from '../env.js';
+
 import { AppIds, AppAPIs } from '../static/api.configs';
-
-const coreAppId = "FEEDRIZER";
-
-const config =  JSON.parse(require('dotenv').config().parsed.JSON)[coreAppId];
 
 var oauthPerApp = {
 	...Object.keys(AppIds).map(key => ({ key : null}))
 };
 
-var initAuthForApp = (for_app, callback_url) => (
+var initAuthForApp = ({for_app, auth_args, callback_url}) => (
 		oauthPerApp[for_app] = oauthPerApp[for_app] || new OAuth.OAuth(
 		AppAPIs[for_app].request_token,
 		AppAPIs[for_app].access_token,
@@ -21,13 +20,13 @@ var initAuthForApp = (for_app, callback_url) => (
 	)
 );
 
-var getOauth = ({for_app, callback_url}) => (
+var getOauth = ({for_app, auth_args, callback_url}) => (
 	AppIds[for_app] && AppAPIs[for_app]
-		&& initAuthForApp(for_app, callback_url)
+		&& initAuthForApp({for_app, auth_args, callback_url})
 );
 
-export const getOAuthRequestToken = (({for_app, callback_url}, cb, errocCb) => {
-	let oauth = getOauth({for_app, callback_url});
+export const getOAuthRequestToken = (({for_app, auth_args, callback_url}, cb, errocCb) => {
+	let oauth = getOauth({for_app, auth_args, callback_url});
 
 	if (oauth) {
 		oauth.getOAuthRequestToken(

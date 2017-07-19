@@ -7,6 +7,8 @@ import { resolvers } from './resolvers';
 
 export const typeDefs = `
 
+scalar JSON
+
 type ChildChannel {
   id: ID!
   name: String
@@ -50,11 +52,11 @@ type Auth {
 }
 
 type Mutation {
-  sync(for_app: String!, oauth_token: String!, oauth_verifier: String!): Auth
+  sync(for_app: String!, auth_params: JSON!): Auth
   getAuthUrl(for_app: String!): Auth
 }
 `;
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({ typeDefs, resolvers});
 // addMockFunctionsToSchema({ schema });
 export { schema };
