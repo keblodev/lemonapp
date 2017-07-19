@@ -8,16 +8,17 @@
 
         - Login
             - user session setup
-            - FB auth
-            - G+
+            - FB auth - done
+            - G+ - done
         - OAuth
             - twitter - done
-            - FB
+            - FB - done
             - Youtube
             - SoundCloud
             - Medium
             - Pinterest
             - Tumblr
+			- Instagram - done
         - Nav
             - user
                 - user page
