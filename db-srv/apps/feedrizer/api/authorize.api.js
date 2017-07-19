@@ -40,6 +40,22 @@ router.post('/facebook', (req, res, next) => {
 	res.end(JSON.stringify({auth_url}));
 });
 
+router.post('/instagram', (req, res, next) => {
+
+	const {user_id, guest_id, for_app, callback_url} = req.body;
+
+	const {client_id, redirect_uri, response_type} = config[for_app];
+
+	const authUrl = AppAPIs[for_app].auth_url;
+
+	const auth_url = authUrl + querystring.stringify({client_id, redirect_uri, response_type});
+
+	console.log(auth_url);
+
+	res.writeHead(200, {'Content-Type': 'json'});
+	res.end(JSON.stringify({auth_url}));
+});
+
 router.post('/google', (req, res, next) => {
 
 	const {user_id, guest_id, for_app, callback_url} = req.body;

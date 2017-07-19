@@ -17,11 +17,16 @@ export const AppAPIs = {
 		token_verify_url:	'https://graph.facebook.com/debug_token?',
 		get_posts_url:		'https://graph.facebook.com/v2.5/{user_id}/feed?'
 	},
-	INSTAGRAM: null,
+	INSTAGRAM: {
+		auth_url: 			'https://api.instagram.com/oauth/authorize/?',
+		access_token_url: 	'https://api.instagram.com/oauth/access_token',
+		// token_verify_url:	'https://graph.facebook.com/debug_token?',
+		get_posts_url:		'https://api.instagram.com/v1/users/{user_id}/media/{collection_type}/?'
+	},
 	MEDIUM: null,
 	GOOGLE: {
 		auth_url:			'https://accounts.google.com/o/oauth2/v2/auth?',
-		access_token_url:	'https://www.googleapis.com/oauth2/v4/token?',
+		access_token_url:	'https://www.googleapis.com/oauth2/v4/token',
 		token_verify_url:	'https://www.googleapis.com/oauth2/v1/tokeninfo?',
 		get_posts_url:		'https://www.googleapis.com/plus/v1/people/{user_id}/activities/{collection_type}?'
 	},
