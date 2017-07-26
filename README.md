@@ -6,6 +6,7 @@
 - Modular sandboxed apps architechture that can expand infinitely to any number of services and sub-apps
 - Combined with size and performance analytics
 - It's google-fast. First paint < 1sec. First interactive 1.3sec. Combined bundle size with all packages < 80kb (*all packages code-splitted with preload/prefetch)
+- Microapps arch on top of MicroServices
 
 ## What it does:
 
